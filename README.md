@@ -1,14 +1,12 @@
 # Pollster
 
+Python Django app to create polls with questions and choices
 
-
-
-
-
-# Install dependencies
+# Quick Start
+#-- Install dependencies
 pipenv install
 
 cd pollster
 
-# Serve on localhost:8000
+-- Serve on localhost:8000
 python manage.py runserver

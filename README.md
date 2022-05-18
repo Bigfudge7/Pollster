@@ -3,7 +3,7 @@
 Python Django app to create polls with questions and choices
 
 # Quick Start
-#-- Install dependencies
+-- Install dependencies
 pipenv install
 
 cd pollster

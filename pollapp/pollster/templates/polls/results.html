@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}| Results{% endblock title %}
+{% block content %}
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<h3 class="mb-5 text-center">{{ question.question_text }}</h3>
+
+<ul class="list-group mb-5">
+	{% for choice in question.choice_set.all %}
+	<li class="list-group-item">
+		{{ choice.choice_text }} <span class="badge badge-success float-right">{{ choice.votes }}
+			vote{{ choice.votes | pluralize }}</span>
+	</li>
+	{% endfor %}
+</ul>
+<a class="btn btn-secondary" href="{% url 'polls:index' %}">Back To Polls</a>
+<a class="btn btn-dark" href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<div id="myChart">
+
+</div>
+<script>
+	let votedata = JSON.parse("{{votedata|escapejs }}")
+	let state = {
+		'items': [],
+		'values': []
+	}
+
+	for (let i in votedata) {
+
+		let value = votedata[i]
+		let key = [i][0]
+
+		state.items.push(key)
+		state.values.push(value)
+	}
+	console.log(state);
+	buildChart()
+
+	function buildChart() {
+
+		let chartData = {
+			'type': 'area3d',
+			 plot: {
+				'border-radius': "20px"
+  			},
+			'scale-x': {
+				'values': state.items
+			},
+			'series': [{
+				'values': state.values,
+				'background-color': "#6666FF #FF0066",
+				alpha: 0.3,
+			}]
+		}
+
+		zingchart.render({
+			id: 'myChart',
+			data: chartData
+		})
+	}
+</script>
+{% endblock %}
